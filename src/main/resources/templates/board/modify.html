@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1>Modify page</h1>
+    <form th:action="@{/board/modify}" method="post">
+      <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+    <div class="form-group row">
+      <label>Bno</label>
+      <input type="text" class="form-control form-control-user" name="bno" th:value="${dto.bno}" readonly>
+    </div>
+    <div class="form-group row">
+      <label>Title</label>
+      <input type="text" class="form-control form-control-user" name="title" th:value="${dto.title}">
+    </div>
+    <div class="form-group row">
+      <label>Content</label>
+      <textarea cols="5" class="form-control form-control-user" name="content">[[${dto.content}]]</textarea>
+    </div>
+    <div class="form-group row">
+      <label>Email</label>
+      <input type="text" class="form-control form-control-user" name="email" th:value="${dto.email}" readonly>
+    </div>
+
+      <th:block th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or ${#authentication.name == dto.email}">
+        <button class="btn btn-secondary btn-icon-split modBtn">
+          <span class="text">Modify</span>
+        </button>
+        <button class="btn btn-danger btn-icon-split removeBtn">
+          <span class="text">Remove</span>
+        </button>
+      </th:block>
+
+    <button class="btn btn-info btn-icon-split listBtn">
+      <span class="text">List</span>
+    </button>
+
+    </form>
+
+    <script th:inline="javascript">
+      $(document).ready(function (){
+
+        var form = $("form");
+        var modBtn = $(".modBtn");
+        var listBtn = $(".listBtn");
+        var removeBtn = $(".removeBtn");
+
+        modBtn.on("click",function(e){
+          e.preventDefault();
+          console.log(this);
+          if(confirm("수정하시겠습니까?")){
+            form.submit();
+          }
+        });
+
+        listBtn.on("click",function(e){
+          e.preventDefault();
+          var page = $("input[name=page]");
+          console.log(page);
+          form.empty();
+          form.attr("method", "get");
+          form.attr("action", "/board/list");
+          form.append(page);
+          form.submit();
+        });
+
+        removeBtn.on("click",function(e){
+          e.preventDefault();
+          if(confirm("삭제하시겠습니까?")){
+            form.attr("action", "/board/remove");
+            form.submit();
+          }
+        });
+      });
+
+    </script>
+  </th:block>
+</th:block>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1>Read page</h1>
+      <div class="form-group row">
+        <label>Bno</label>
+        <input type="text" class="form-control form-control-user" name="bno" th:value="${dto.bno}" readonly>
+      </div>
+      <div class="form-group row">
+        <label>Title</label>
+        <input type="text" class="form-control form-control-user" name="title" th:value="${dto.title}" readonly>
+      </div>
+      <div class="form-group row">
+        <label>Content</label>
+        <textarea cols="5" class="form-control form-control-user" name="content" readonly>[[${dto.content}]]</textarea>
+      </div>
+      <div class="form-group row">
+        <label>Writer Email</label>
+        <input type="text" class="form-control form-control-user" name="email" th:value="${dto.email}" readonly>
+      </div>
+      <div class="form-group row">
+        <label>Writer Name</label>
+        <input type="text" class="form-control form-control-user" name="name" th:value="${dto.name}" readonly>
+      </div>
+
+      <div class="form-group row">
+        <label>RegDate</label>
+        <input type="text" class="form-control form-control-user" name="regDate" th:value="${#temporals.format(dto.regDate,'yyyy/MM/dd')}" readonly>
+      </div>
+      <div class="form-group row">
+        <label>ModDate</label>
+        <input type="text" class="form-control form-control-user" name="modDate" th:value="${#temporals.format(dto.modDate,'yyyy/MM/dd')}" readonly>
+      </div>
+
+    <th:block th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or ${#authentication.name == dto.email}">
+      <a th:href="@{/board/modify(page=${pageRequestDTO.page}, bno=${dto.bno})}">
+        <button class="btn btn-secondary btn-icon-split modBtn" >
+          <span class="text">Modify</span>
+        </button>
+      </a>
+    </th:block>
+      <a th:href="@{/board/list(page=${pageRequestDTO.page})}">
+        <button class="btn btn-info btn-icon-split">
+         <span class="text">List</span>
+        </button>
+      </a>
+  </th:block>
+</th:block>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mariworld.imageboard.mapper.BoardMapper">
+    <select id = "countAll" resultType = "int">
+        SELECT COUNT(BNO) FROM BOARD
+    </select>
+    <select id = "getListTest" resultType = "com.mariworld.imageboard.dto.BoardDTO">
+        SELECT * FROM BOARD B LEFT JOIN MEMBER M ON B.MEMBER_EMAIL = M.EMAIL
+    </select>
+    <select id = "getListTest2" resultType = "com.mariworld.imageboard.dto.BoardDTO"
+        parameterType="com.mariworld.imageboard.dto.PageRequestDTO">
+        SELECT * FROM BOARD B
+            LEFT JOIN MEMBER M ON B.MEMBER_EMAIL = M.EMAIL
+            ORDER BY BNO DESC
+            LIMIT  #{page}, #{size}
+    </select>
+    <select id = "getList" resultType = "com.mariworld.imageboard.dto.BoardDTO"
+            parameterType="com.mariworld.imageboard.dto.PageRequestDTO">
+        SELECT * FROM BOARD B
+            LEFT JOIN MEMBER M ON B.MEMBER_EMAIL = M.EMAIL
+            ORDER BY BNO DESC
+            LIMIT  #{page}, #{size}
+    </select>
+</mapper>

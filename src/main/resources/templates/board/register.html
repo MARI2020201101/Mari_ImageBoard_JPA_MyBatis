@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1>Register page</h1>
+        <form th:action="@{/board/register}" method="post">
+            <input th:type="hidden" name="page" th:value="${pageRequestDTO.page}">
+            <div class="form-group row">
+                <label>Title</label>
+                <input type="text" class="form-control form-control-user" name="title"
+                           placeholder="Title">
+            </div>
+            <div class="form-group row">
+                <label>Content</label>
+                <textarea cols="5" class="form-control form-control-user" name="content"
+                       placeholder="Content"></textarea>
+            </div>
+            <div class="form-group row">
+                <label>Email</label>
+                <input type="text" class="form-control form-control-user" name="email"
+                           placeholder="email" th:value="${memberDTO.email}"readonly>
+            </div>
+            <button class="btn btn-primary btn-icon-split">
+                <span class="text">Register</span>
+            </button>
+        </form>
+    </th:block>
+</th:block>
+</html>

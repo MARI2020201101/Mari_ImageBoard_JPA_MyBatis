@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1>Access Error</h1>
+      <p>잘못된 접근입니다.</p>
+  </th:block>
+</th:block>
+</html>
