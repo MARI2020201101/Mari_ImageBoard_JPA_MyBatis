@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1>Image Register page</h1>
+        <form th:action="@{/image/register}" method="post">
+            <input th:type="hidden" name="page" th:value="${pageRequestDTO.page}">
+            <div class="form-group row">
+                <label>Text</label>
+                <input type="text" class="form-control form-control-user" name="text"
+                           placeholder="text...">
+            </div>
+            <div class="form-group row">
+                <label>Email</label>
+                <input type="text" class="form-control form-control-user" name="email"
+                           placeholder="email" >
+            </div>
+            <div class="form-group">
+                <label>Image Files</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input files" id="fileInput" multiple>
+                    <label class="custom-file-label" data-browse="Browse"></label>
+                </div>
+            </div>
+            <div class="box"></div>
+            <button class="btn btn-primary btn-icon-split">
+                <span class="text">Register</span>
+            </button>
+        </form>
+        <div class="uploadResult">
+            <ul></ul>
+        </div>
+    </th:block>
+</th:block>
+<style>
+    .uploadResult ul {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+        vertical-align: top;
+        overflow: auto;
+    }
+
+    .uploadResult ul li {
+        list-style: none;
+        padding: 10px;
+        margin-left: 2em;
+    }
+
+</style>
+<script>
+    $(document).ready(function (){
+        var regEx = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+        var maxSize = 1024*1024*10;
+        function checkFile(fileName, fileSize){
+            if(fileSize> maxSize){
+                alert("파일 사이즈 초과");
+                return false;
+            }
+            if(regEx.test(fileName)){
+                alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                return false;
+            }
+            return true;
+        };
+
+      $(".custom-file-input").on("change",function (){
+
+          var inputFile = $(this);
+          var displayFileName = inputFile.val().split("\\").pop();
+          var file = inputFile[0].files;
+          var formData = new FormData();
+          var appended = false;
+          $(this).siblings(".custom-file-label").addClass("selected").html(displayFileName);
+
+          for(var i=0; i<file.length ; i++){
+
+              if(!(checkFile(file[i].type, file[i].size))) {
+                  return false;
+              }
+              formData.append("uploadFiles", file[i]);
+              appended = true;
+
+              if(!appended){return;}
+          }
+
+          $.ajax({
+              url:"/uploadFile",
+              type:"POST",
+              processData:false,
+              contentType:false,
+              dataType:"json",
+              data:formData,
+              success:function (result){
+                console.log(result);
+                  uploadResult(result);
+              },
+              error:function (request,status,error){
+                console.log(request);
+              }
+
+          });
+
+      })
+        $(".btn-primary").on("click",function (e){
+            e.preventDefault();
+            var str ="";
+            $(".uploadResult li").each(function (i,obj){
+                var target = $(obj);
+                str += "<input type='hidden' name='imageDTOList["+i+"].imgName' " +
+                    " value='"+target.data('name')+"'>";
+                str += "<input type='hidden' name='imageDTOList["+i+"].path' " +
+                    " value='"+target.data('path')+"'>";
+                str += "<input type='hidden' name='imageDTOList["+i+"].uuid' " +
+                    " value='"+target.data('uuid')+"'>";
+
+            });
+            $(".box").html(str);
+            $("form").submit();
+
+        });
+
+        function uploadResult(uploadArr){
+          var uploadResultUL = $(".uploadResult ul");
+          var str = "";
+            $(uploadArr).each(function (idx,obj){
+                str += "<li data-name='"+obj.imgName+"' data-path='"+obj.path+"'" +
+                    "data-uuid='"+obj.uuid+"'>";
+                str+="<div> ";
+                str+="<button type='button' data-file='"+obj.imagePath+"'" +
+                    "class ='btn-danger btn-sm' >X</button>";
+                str+="<img src='/display?fileName="+obj.thumbnailPath+"'/> ";
+                str+="</div> ";
+                str+="</li> ";
+
+                uploadResultUL.append(str);
+            });
+        };
+
+      $(".uploadResult").on("click","button",function (e){
+            e.preventDefault();
+            var imagePath = $(this).data("file");
+            var targetLi = $(this).closest("li");
+          console.log($(this));
+            console.log(imagePath);
+            $.ajax({
+                url:"/removeFile",
+                data:{"filePath" : imagePath},
+                type:"POST",
+                dataType: "text",
+                success:function (result){
+                    console.log(result);
+                    targetLi.remove();
+                },
+                error: function (request,status,error){
+                    console.log(request);
+                }
+            });
+        });
+
+    });
+</script>
+</html>
