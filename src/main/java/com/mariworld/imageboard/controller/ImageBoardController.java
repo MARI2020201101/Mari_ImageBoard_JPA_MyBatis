@@ -25,18 +25,25 @@ public class ImageBoardController {
     }
 
     @PostMapping("/register")
-    public String register(ImageBoardDTO imageBoardDTO, RedirectAttributes rttr){
+    public String register(ImageBoardDTO imageBoardDTO, RedirectAttributes rttr
+            , PageRequestDTO pageRequestDTO){
         log.info("--------------------------img register-----------------");
         log.info(imageBoardDTO.toString());
         Long ibno = imageBoardService.register(imageBoardDTO);
         log.info("\nibno: "+ibno);
         rttr.addFlashAttribute("msg",ibno);
-        return "/image/list";
+
+        return "redirect:/image/list";
     }
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO , Model model){
+    public void list(PageRequestDTO pageRequestDTO, Model model){
 
         model.addAttribute("list", imageBoardService.getList(pageRequestDTO));
 
+    }
+
+    @GetMapping("/read")
+    public void read(PageRequestDTO pageRequestDTO, Long ibno, Model model){
+        model.addAttribute("dto", imageBoardService.read(ibno));
     }
 }

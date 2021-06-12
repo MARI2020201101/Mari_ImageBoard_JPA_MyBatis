@@ -16,7 +16,7 @@ public class PageRequestDTO {
     private int size=10;
 
     public PageRequestDTO(int page, int size){
-        this.page=page -1 ;
+        this.page=page ;
         this.size=size;
     }
     public PageRequest makePageRequest(Sort sort){

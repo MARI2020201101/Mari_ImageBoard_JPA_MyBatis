@@ -13,7 +13,8 @@ public interface ImageBoardRepository extends JpaRepository<ImageBoard, Long> {
 
     @Query("select ib, i, m from ImageBoard ib " +
             "left join Image i on i.imageBoard = ib " +
-            "left join Member m on ib.member = m " )
+            "left join Member m on ib.member = m " +
+            "group by ib" )
     Page<Object[]> getImageBoardList(PageRequest pageRequest);
 
     @Query("select ib, i, m from ImageBoard ib " +

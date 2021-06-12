@@ -20,8 +20,12 @@ public class ImageBoardServiceTest {
     @Test
     public void getListTest(){
         PageRequestDTO pageRequestDTO = new PageRequestDTO();
-
         PageResultDTO<ImageBoardDTO, Object[]> result= imageBoardService.getList(pageRequestDTO);
 
+        result.getPageList().stream().forEach(System.out::println);
+    }
+    @Test
+    public void readTest(){
+        imageBoardService.read(80L);
     }
 }

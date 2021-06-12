@@ -11,6 +11,13 @@
         <label>Text</label>
         <input type="text" class="form-control form-control-user" name="text" th:value="${dto.text}" readonly>
       </div>
+    <div class="form-group row">
+      <ul>
+        <li th:each="image: ${dto.imageDTOList}">
+          <img  th:if="${image.path != null}" th:src="|/display?fileName=${image.getImagePath()}|">
+        </li>
+      </ul>
+    </div>
       <div class="form-group row">
         <label>Writer Email</label>
         <input type="text" class="form-control form-control-user" name="email" th:value="${dto.email}" readonly>
@@ -23,14 +30,7 @@
         <label>ModDate</label>
         <input type="text" class="form-control form-control-user" name="modDate" th:value="${#temporals.format(dto.modDate,'yyyy/MM/dd')}" readonly>
       </div>
-
-    <th:block th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or ${#authentication.name == dto.email}">
-      <a th:href="@{/image/remove(page=${pageRequestDTO.page}, ibno=${dto.ibno})}">
-        <button class="btn btn-secondary btn-icon-split" >
-          <span class="text">Delete</span>
-        </button>
-      </a>
-    </th:block>
+    
       <a th:href="@{/image/list(page=${pageRequestDTO.page})}">
         <button class="btn btn-info btn-icon-split">
          <span class="text">List</span>

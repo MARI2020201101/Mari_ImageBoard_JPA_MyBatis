@@ -50,11 +50,13 @@ public class ImageBoardServiceImpl implements ImageBoardService{
     }
 
     @Override
-    public List<ImageBoardDTO> read(Long ibno) {
+    public ImageBoardDTO read(Long ibno) {
         List<Object[]> result = imageBoardRepository.getImageBoardWithAll(ibno);
-        List<ImageBoardDTO> imageBoardDTOList = result.stream()
-                .map(en-> entitiesToDTO((ImageBoard) en[0], Arrays.asList((Image)en[1]), (Member) en[2]))
-                .collect(Collectors.toList());
-        return imageBoardDTOList;
+
+        ImageBoard imageBoard = (ImageBoard) result.get(0)[0];
+        List<Image> imageList = result.stream().map(en->(Image)en[1]).collect(Collectors.toList());
+        Member member = (Member) result.get(0)[2];
+
+        return entitiesToDTO(imageBoard,imageList,member);
     }
 }

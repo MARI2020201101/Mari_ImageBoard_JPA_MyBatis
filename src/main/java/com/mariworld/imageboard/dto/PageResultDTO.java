@@ -44,17 +44,10 @@ public class PageResultDTO<DTO, EN> {
     private void makePages(){
         int tempEnd = (int)(Math.ceil(page/10.0))*10;
         this.end = tempEnd > total? total:tempEnd;
-        this.start = end-9;
+        this.start = end<10? 1 : end-9;
         this.prev = start>1;
         this.next = end !=total;
         this.pageList = IntStream.rangeClosed(start,end).boxed().collect(Collectors.toList());
     }
 
-
-/*    public static void main(String[] args){
-        int p = 9;
-        int e = (int)(Math.ceil(p/10.0))*10;
-        System.out.println("end page :" +e);
-
-    }*/
 }
