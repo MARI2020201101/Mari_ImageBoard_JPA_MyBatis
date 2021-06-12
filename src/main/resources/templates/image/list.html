@@ -23,7 +23,7 @@
                     <tbody>
 
                     <tr th:each="dto : ${list.dtoList}"  >
-                        <th scope="row"><a th:href="@{/image/read(page=${list.page},bno=${dto.ibno})}">[[${dto.ibno}]]</a></th>
+                        <th scope="row"><a th:href="@{/image/read(page=${list.page},ibno=${dto.ibno})}">[[${dto.ibno}]]</a></th>
                         <td >[[${dto.text}]]</td>
                         <td ><img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0].path != null }"
                                   th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnailPath()}|" ></td>

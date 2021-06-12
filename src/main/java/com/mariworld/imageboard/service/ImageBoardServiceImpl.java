@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,5 +47,14 @@ public class ImageBoardServiceImpl implements ImageBoardService{
                 = (en-> entitiesToDTO((ImageBoard) en[0], Arrays.asList((Image)en[1]), (Member) en[2]));
 
         return new PageResultDTO<>(result,fn);
+    }
+
+    @Override
+    public List<ImageBoardDTO> read(Long ibno) {
+        List<Object[]> result = imageBoardRepository.getImageBoardWithAll(ibno);
+        List<ImageBoardDTO> imageBoardDTOList = result.stream()
+                .map(en-> entitiesToDTO((ImageBoard) en[0], Arrays.asList((Image)en[1]), (Member) en[2]))
+                .collect(Collectors.toList());
+        return imageBoardDTOList;
     }
 }
