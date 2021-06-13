@@ -3,6 +3,7 @@
 <th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
   <th:block th:fragment="content">
     <h1>Image Read page</h1>
+    <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
       <div class="form-group row">
         <label>IBno</label>
         <input type="text" class="form-control form-control-user" name="ibno" th:value="${dto.ibno}" readonly>
@@ -11,9 +12,9 @@
         <label>Text</label>
         <input type="text" class="form-control form-control-user" name="text" th:value="${dto.text}" readonly>
       </div>
-    <div class="form-group row">
+    <div class="form-group row imgList">
       <ul>
-        <li th:each="image: ${dto.imageDTOList}">
+        <li th:each="image: ${dto.imageDTOList}" th:data-path="${image.getImagePath()}">
           <img  th:if="${image.path != null}" th:src="|/display?fileName=${image.getImagePath()}|">
         </li>
       </ul>
@@ -30,12 +31,71 @@
         <label>ModDate</label>
         <input type="text" class="form-control form-control-user" name="modDate" th:value="${#temporals.format(dto.modDate,'yyyy/MM/dd')}" readonly>
       </div>
-    
-      <a th:href="@{/image/list(page=${pageRequestDTO.page})}">
-        <button class="btn btn-info btn-icon-split">
+
+    <form method="POST" th:action="@{/image/remove}">
+      <th:block th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or ${#authentication.name == dto.email}">
+      <input type="hidden" name="ibno" th:value="${dto.ibno}">
+      <input type="hidden" name="email" th:value="${dto.email}">
+            <button class="btn btn-danger btn-icon-split removeBtn" >
+              <span class="text">Remove</span>
+            </button>
+      </th:block>
+        <button class="btn btn-info btn-icon-split listBtn">
          <span class="text">List</span>
         </button>
-      </a>
+    </form>
   </th:block>
 </th:block>
+<script th:inline="javascript">
+  $(document).ready(function(){
+
+    var form = $("form");
+    var listBtn = $(".listBtn");
+    var removeBtn = $(".removeBtn");
+
+    listBtn.on("click",function(e){
+      e.preventDefault();
+      var page = $("input[name='page']");
+      console.log(page);
+      form.empty();
+      form.attr("method", "get");
+      form.attr("action", "/image/list");
+      form.append(page);
+      form.submit();
+    });
+
+    removeBtn.on("click",function(e){
+      e.preventDefault();
+      if(confirm("삭제하시겠습니까?")){
+        var imgList = $(".imgList li");
+        console.log(imgList);
+        console.log(imgList.length);
+
+        for(var i=0;i<imgList.length;i++){
+          console.log(imgList[i]);
+          console.log($(imgList[i]).data("path"));
+          var filePath = $(imgList[i]).data("path");
+
+          $.ajax({
+            url:"/removeFile",
+            data:{"filePath" : filePath},
+            type:"POST",
+            dataType: "text",
+            success:function (result){
+              console.log(result);
+            },
+            error: function (request,status,error){
+              console.log(request);
+            }
+          });
+        }
+
+        form.submit();
+      }
+
+    });
+  });
+
+
+</script>
 </html>

@@ -59,4 +59,11 @@ public class ImageBoardServiceImpl implements ImageBoardService{
 
         return entitiesToDTO(imageBoard,imageList,member);
     }
+
+    @Override
+    @Transactional
+    public void remove(Long ibno) {
+        imageRepository.deleteByIbno(ibno);
+        imageBoardRepository.deleteById(ibno);
+    }
 }

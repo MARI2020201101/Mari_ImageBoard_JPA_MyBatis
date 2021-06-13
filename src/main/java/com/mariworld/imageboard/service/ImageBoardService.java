@@ -19,7 +19,7 @@ public interface ImageBoardService {
     Long register(ImageBoardDTO imageBoardDTO);
     PageResultDTO<ImageBoardDTO,Object[]> getList(PageRequestDTO pageRequestDTO);
     ImageBoardDTO read(Long ibno);
-
+    void remove(Long ibno);
 
     default Map<String, Object> DtoToEntity(ImageBoardDTO imageBoardDTO){
 
