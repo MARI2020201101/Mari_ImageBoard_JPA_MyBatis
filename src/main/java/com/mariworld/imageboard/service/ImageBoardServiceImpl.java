@@ -28,7 +28,7 @@ public class ImageBoardServiceImpl implements ImageBoardService{
     private final ImageRepository imageRepository;
 
     @Override @Transactional
-    public Long register(ImageBoardDTO imageBoardDTO) {
+    public Long register(ImageBoardDTO imageBoardDTO) throws Exception{
         Map<String, Object> map = DtoToEntity(imageBoardDTO);
         ImageBoard imageBoard = (ImageBoard) map.get("imageBoard");
         List<Image> imageList = (List<Image>) map.get("imageList");
@@ -40,7 +40,7 @@ public class ImageBoardServiceImpl implements ImageBoardService{
     }
 
     @Override
-    public PageResultDTO<ImageBoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
+    public PageResultDTO<ImageBoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO) throws Exception{
         PageRequest pageRequest = pageRequestDTO.makePageRequest(Sort.by("ibno").descending());
         Page<Object[]> result = imageBoardRepository.getImageBoardList(pageRequest);
         Function<Object[], ImageBoardDTO> fn
@@ -50,7 +50,7 @@ public class ImageBoardServiceImpl implements ImageBoardService{
     }
 
     @Override
-    public ImageBoardDTO read(Long ibno) {
+    public ImageBoardDTO read(Long ibno) throws Exception{
         List<Object[]> result = imageBoardRepository.getImageBoardWithAll(ibno);
 
         ImageBoard imageBoard = (ImageBoard) result.get(0)[0];
@@ -62,7 +62,7 @@ public class ImageBoardServiceImpl implements ImageBoardService{
 
     @Override
     @Transactional
-    public void remove(Long ibno) {
+    public void remove(Long ibno) throws Exception{
         imageRepository.deleteByIbno(ibno);
         imageBoardRepository.deleteById(ibno);
     }

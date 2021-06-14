@@ -1,7 +1,6 @@
 package com.mariworld.imageboard.controller;
 
 import com.mariworld.imageboard.dto.ImageDTO;
-import com.mariworld.imageboard.entity.Image;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,12 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,7 +21,6 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,7 +32,7 @@ public class UploadController {
     private String uploadPath;
 
     @PostMapping("/uploadFile")
-    public ResponseEntity<List<ImageDTO>> upload(MultipartFile[] uploadFiles){
+    public ResponseEntity<List<ImageDTO>> upload(MultipartFile[] uploadFiles) throws Exception{
         log.info("----------------------upload------------------------------");
         log.info(uploadFiles.toString());
 
@@ -47,7 +43,8 @@ public class UploadController {
                 log.info("this is not image file");
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-            String originalName = uploadFile.getOriginalFilename();
+            String original = uploadFile.getOriginalFilename();
+            String originalName = original.substring(original.lastIndexOf("\\")+1);
             String uuid = UUID.randomUUID().toString();
             String folderPath = makeFolderPath();
             String saveFileName = uploadPath + File.separator + folderPath + File.separator
@@ -56,17 +53,12 @@ public class UploadController {
             Path savePath = Paths.get(saveFileName);
 
 
-            try{
                 uploadFile.transferTo(savePath);
 
                 String thumbnailSaveName = uploadPath + File.separator + folderPath +
                         File.separator + "s_" + uuid + "_" + originalName;
                 File thumbnailFile = new File(thumbnailSaveName);
                 Thumbnailator.createThumbnail(savePath.toFile(),thumbnailFile,150,150);
-
-            }catch(Exception e){
-                e.printStackTrace();
-            }
 
             ImageDTO imageDTO = ImageDTO.builder()
                     .imgName(originalName)
@@ -81,38 +73,30 @@ public class UploadController {
     }
 
     @GetMapping("/display")
-    public ResponseEntity<byte[]> displayFile(String fileName) {
-        try{
+    public ResponseEntity<byte[]> displayFile(String fileName) throws Exception{
+
             String srcFile = URLDecoder.decode(fileName,"UTF-8");
             File file = new File(uploadPath + File.separator + srcFile);
             HttpHeaders header = new HttpHeaders();
             header.add("Content-Type", Files.probeContentType(file.toPath()));
 
             return new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/removeFile")
-    public ResponseEntity<Boolean> removeFile(String filePath){
-        try{
+    public ResponseEntity<Boolean> removeFile(String filePath) throws Exception{
+
             String srcFilePath = URLDecoder.decode(filePath,"UTF-8");
             File file = new File(uploadPath+File.separator + srcFilePath);
             File thumbnailFile = new File(file.getParent(), "s_"+file.getName());
             file.delete();
             thumbnailFile.delete();
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
 
-    private String makeFolderPath() {
+    private String makeFolderPath() throws Exception{
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String folderPath = str.replace("//", File.separator);
 

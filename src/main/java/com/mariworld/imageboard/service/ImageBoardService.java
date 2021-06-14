@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 
 public interface ImageBoardService {
 
-    Long register(ImageBoardDTO imageBoardDTO);
-    PageResultDTO<ImageBoardDTO,Object[]> getList(PageRequestDTO pageRequestDTO);
-    ImageBoardDTO read(Long ibno);
-    void remove(Long ibno);
+    Long register(ImageBoardDTO imageBoardDTO)throws Exception;
+    PageResultDTO<ImageBoardDTO,Object[]> getList(PageRequestDTO pageRequestDTO)throws Exception;
+    ImageBoardDTO read(Long ibno)throws Exception;
+    void remove(Long ibno)throws Exception;
 
     default Map<String, Object> DtoToEntity(ImageBoardDTO imageBoardDTO){
 

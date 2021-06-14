@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
     int countAll();
-    List<BoardDTO> getListTest();
-    List<BoardDTO> getListTest2(PageRequestDTO pageRequestDTO);
-    List<BoardDTO> getList(PageRequestDTO pageRequestDTO);
+    List<BoardDTO> getListTest() throws Exception;
+    List<BoardDTO> getListTest2(PageRequestDTO pageRequestDTO)throws Exception;
+    List<BoardDTO> getList(PageRequestDTO pageRequestDTO) throws Exception;
 
 }

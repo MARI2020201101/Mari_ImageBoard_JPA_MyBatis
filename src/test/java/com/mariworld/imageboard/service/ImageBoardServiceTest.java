@@ -18,14 +18,14 @@ public class ImageBoardServiceTest {
     private ImageBoardService imageBoardService;
 
     @Test
-    public void getListTest(){
+    public void getListTest() throws Exception {
         PageRequestDTO pageRequestDTO = new PageRequestDTO();
         PageResultDTO<ImageBoardDTO, Object[]> result= imageBoardService.getList(pageRequestDTO);
 
         result.getPageList().stream().forEach(System.out::println);
     }
     @Test
-    public void readTest(){
+    public void readTest() throws Exception {
         imageBoardService.read(80L);
     }
 }

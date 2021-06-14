@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CommonController {
 
     @GetMapping("")
-    public String index(){
+    public String index()throws Exception{
         return "redirect:/board/list";
     }
 
     @GetMapping("/customLogin")
     public void customLoginForm(String error, String logout, Model model
-            ,@AuthenticationPrincipal MemberDTO memberDTO){
+            ,@AuthenticationPrincipal MemberDTO memberDTO)throws Exception{
 
         log.info("customLogin.........................");
         if(error!=null){
@@ -32,11 +32,11 @@ public class CommonController {
         }
     }
     @GetMapping("/accessError")
-    public void accessError(){
+    public void accessError()throws Exception{
     }
 
     @GetMapping("/customLogout")
-    public void customLogoutForm(){
+    public void customLogoutForm()throws Exception{
     }
 
 }

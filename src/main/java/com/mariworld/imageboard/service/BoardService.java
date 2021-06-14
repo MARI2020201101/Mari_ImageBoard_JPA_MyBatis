@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface BoardService {
 
-    List<Object[]> getList();
-    List<Board> getListTest();
+    List<Object[]> getList()throws Exception;
+    List<Board> getListTest()throws Exception;
     //public List<Object[]> getList(PageRequestDTO pageRequestDTO);
-    PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
-    PageResultDTO<BoardDTO, Object[]> getList_m(PageRequestDTO pageRequestDTO);
-    Long register(BoardDTO dto);
-    BoardDTO read(Long bno);
-    void modify(BoardDTO dto);
-    void remove(Long bno);
+    PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO)throws Exception;
+    PageResultDTO<BoardDTO, Object[]> getList_m(PageRequestDTO pageRequestDTO) throws Exception;
+    Long register(BoardDTO dto)throws Exception;
+    BoardDTO read(Long bno)throws Exception;
+    void modify(BoardDTO dto)throws Exception;
+    void remove(Long bno)throws Exception;
 
     default BoardDTO entityToDTO(Board board, Member member){
         BoardDTO dto = BoardDTO.builder()

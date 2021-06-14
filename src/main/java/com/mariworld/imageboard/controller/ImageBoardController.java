@@ -26,7 +26,7 @@ public class ImageBoardController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/register")
     public void registerForm(PageRequestDTO pageRequestDTO
-            ,@AuthenticationPrincipal MemberDTO memberDTO, Model model){
+            ,@AuthenticationPrincipal MemberDTO memberDTO, Model model) throws Exception{
         model.addAttribute("memberDTO" , memberDTO);
 
     }
@@ -34,7 +34,7 @@ public class ImageBoardController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/register")
     public String register(ImageBoardDTO imageBoardDTO, RedirectAttributes rttr
-            , PageRequestDTO pageRequestDTO){
+            , PageRequestDTO pageRequestDTO)throws Exception{
         Long ibno = imageBoardService.register(imageBoardDTO);
         log.info("\nibno: "+ibno);
         rttr.addFlashAttribute("msg"," 이미지게시글 "+ibno+" 번이 등록되었습니다.");
@@ -42,21 +42,21 @@ public class ImageBoardController {
         return "redirect:/image/list";
     }
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model){
+    public void list(PageRequestDTO pageRequestDTO, Model model)throws Exception{
 
         model.addAttribute("list", imageBoardService.getList(pageRequestDTO));
 
     }
 
     @GetMapping("/read")
-    public void read(PageRequestDTO pageRequestDTO, Long ibno, Model model){
+    public void read(PageRequestDTO pageRequestDTO, Long ibno, Model model)throws Exception{
         model.addAttribute("dto", imageBoardService.read(ibno));
     }
 
     @PreAuthorize("authentication.principal.username == #email or hasRole('ROLE_ADMIN')")
     @PostMapping("/remove")
     public String remove(Long ibno, RedirectAttributes rttr
-            , @AuthenticationPrincipal MemberDTO memberDTO, String email){
+            , @AuthenticationPrincipal MemberDTO memberDTO, String email)throws Exception{
         log.info("--------------------------------------------------------");
         log.info("remove ibno : " + ibno);
         imageBoardService.remove(ibno);

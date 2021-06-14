@@ -26,17 +26,17 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
     private final BoardMapper boardMapper;
     @Override
-    public List<Object[]> getList() {
+    public List<Object[]> getList()throws Exception {
         return boardRepository.getBoardWithMember();
     }
 
     @Override
-    public List<Board> getListTest() {
+    public List<Board> getListTest()throws Exception {
         return boardRepository.findAll();
     }
 
     @Override
-    public PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
+    public PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO) throws Exception{
         PageRequest pageRequest = pageRequestDTO.makePageRequest(Sort.by("bno").descending());
 
         Page<Object[]> entity = boardRepository.getBoardWithMember(pageRequest);
@@ -48,7 +48,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override @Transactional
-    public PageResultDTO<BoardDTO, Object[]> getList_m(PageRequestDTO pageRequestDTO) {
+    public PageResultDTO<BoardDTO, Object[]> getList_m(PageRequestDTO pageRequestDTO) throws Exception{
         List<BoardDTO> dtoList = boardMapper.getList(pageRequestDTO);
         int count =boardMapper.countAll();
 
@@ -59,7 +59,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Long register(BoardDTO dto) {
+    public Long register(BoardDTO dto) throws Exception{
         Member member = Member.builder().email(dto.getEmail()).build();
         Board board = Board.builder()
                 .title(dto.getTitle())
@@ -71,14 +71,14 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public BoardDTO read(Long bno) {
+    public BoardDTO read(Long bno) throws Exception{
         Object result = boardRepository.getBoardWithMember(bno);
         Object[] arr = (Object[])result;
         return entityToDTO((Board) arr[0],(Member)arr[1]);
     }
 
     @Override
-    public void modify(BoardDTO dto) {
+    public void modify(BoardDTO dto) throws Exception{
         Board board = boardRepository.findById(dto.getBno()).get();
         if(board!=null){
             board.changeTitle(dto.getTitle());
@@ -88,7 +88,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void remove(Long bno) {
+    public void remove(Long bno)throws Exception {
         boardRepository.deleteById(bno);
     }
 }

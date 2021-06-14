@@ -28,7 +28,7 @@ public class BoardController {
 
     @GetMapping("/list")
     public String index(Model model, PageRequestDTO pageRequestDTO
-            , @AuthenticationPrincipal MemberDTO memberDTO){
+            , @AuthenticationPrincipal MemberDTO memberDTO)throws Exception{
 
         log.info("---------------------------------------------------------------");
         if(memberDTO!=null){
@@ -47,7 +47,7 @@ public class BoardController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/register")
     public String registerForm(PageRequestDTO pageRequestDTO
-            , @AuthenticationPrincipal MemberDTO memberDTO, Model model){
+            , @AuthenticationPrincipal MemberDTO memberDTO, Model model)throws Exception{
         model.addAttribute("memberDTO" ,memberDTO);
         return "/board/register";
     }
@@ -55,7 +55,7 @@ public class BoardController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/register")
     public String register(BoardDTO dto, PageRequestDTO pageRequestDTO
-            , RedirectAttributes attr){
+            , RedirectAttributes attr)throws Exception{
         log.info(String.valueOf(dto));
         log.info(String.valueOf(pageRequestDTO));
         Long bno = boardService.register(dto);
@@ -66,14 +66,14 @@ public class BoardController {
     }
     @GetMapping("/read")
     public void read(Long bno, PageRequestDTO pageRequestDTO
-        , Model model){
+        , Model model)throws Exception{
         BoardDTO dto = boardService.read(bno);
         model.addAttribute("dto", dto);
     }
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify")
     public void modify(Long bno, PageRequestDTO pageRequestDTO
-            , Model model){
+            , Model model)throws Exception{
         BoardDTO dto = boardService.read(bno);
         model.addAttribute("dto", dto);
     }
@@ -82,7 +82,7 @@ public class BoardController {
     @PostMapping("/modify")
     public String modify( PageRequestDTO pageRequestDTO
             , RedirectAttributes rttr, BoardDTO dto
-            , @AuthenticationPrincipal MemberDTO memberDTO){
+            , @AuthenticationPrincipal MemberDTO memberDTO)throws Exception{
 
         BoardDTO modDto = boardService.read(dto.getBno());
         log.info("------------------------------------------");
@@ -101,7 +101,7 @@ public class BoardController {
 
     @PreAuthorize("authentication.principal.username == #dto.email or hasRole('ROLE_ADMIN')")
     @PostMapping("/remove")
-    public String remove(BoardDTO dto, RedirectAttributes rttr){
+    public String remove(BoardDTO dto, RedirectAttributes rttr)throws Exception{
         boardService.remove(dto.getBno());
         rttr.addFlashAttribute("msg"," 게시글 " + dto.getBno()+" 번이 삭제되었습니다.");
         return "redirect:/board/list";
