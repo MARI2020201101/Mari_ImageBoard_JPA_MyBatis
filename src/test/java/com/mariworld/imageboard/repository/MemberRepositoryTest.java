@@ -1,7 +1,7 @@
 package com.mariworld.imageboard.repository;
 
-import com.mariworld.bootboardjpamybatis.entity.Member;
-import com.mariworld.bootboardjpamybatis.entity.MemberRole;
+import com.mariworld.imageboard.entity.Member;
+import com.mariworld.imageboard.entity.MemberRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

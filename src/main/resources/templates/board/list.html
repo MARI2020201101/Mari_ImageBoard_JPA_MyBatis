@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
+<th:block th:replace="~{fragment/layout::setContent(~{this::content})}">
     <th:block th:fragment="content">
         <h1>index page</h1>
         <a th:href="@{/board/register(page=${list.page})}" class="btn btn-primary btn-icon-split">

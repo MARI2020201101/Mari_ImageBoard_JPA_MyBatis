@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<th:block th:replace="~{/fragment/layout::setContent(~{this::content})}">
+<th:block th:replace="~{fragment/layout::setContent(~{this::content})}">
   <th:block th:fragment="content">
     <h1>Image Read page</h1>
     <input type="hidden" name="page" th:value="${pageRequestDTO.page}">

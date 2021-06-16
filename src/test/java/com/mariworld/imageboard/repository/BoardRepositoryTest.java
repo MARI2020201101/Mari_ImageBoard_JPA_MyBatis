@@ -1,7 +1,7 @@
 package com.mariworld.imageboard.repository;
 
-import com.mariworld.bootboardjpamybatis.entity.Board;
-import com.mariworld.bootboardjpamybatis.entity.Member;
+import com.mariworld.imageboard.entity.Board;
+import com.mariworld.imageboard.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,7 +50,7 @@ public class BoardRepositoryTest {
 
     @Test
     public void readTest(){
-        Object result = boardRepository.getBoardWithMember(1L);
+        Object result = boardRepository.getBoardWithMember(2L);
         Object[] arr = (Object[])result;
         Arrays.stream(arr).forEach(System.out::println);
     }

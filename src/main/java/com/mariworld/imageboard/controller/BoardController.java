@@ -41,7 +41,7 @@ public class BoardController {
         log.info("---------------------------------------------------------------");
 
         model.addAttribute("list",boardService.getList(pageRequestDTO));
-        return "/board/list";
+        return "board/list";
     }
     //@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @PreAuthorize("isAuthenticated()")
@@ -49,7 +49,7 @@ public class BoardController {
     public String registerForm(PageRequestDTO pageRequestDTO
             , @AuthenticationPrincipal MemberDTO memberDTO, Model model)throws Exception{
         model.addAttribute("memberDTO" ,memberDTO);
-        return "/board/register";
+        return "board/register";
     }
 
     @PreAuthorize("isAuthenticated()")

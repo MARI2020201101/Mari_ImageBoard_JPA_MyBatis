@@ -12,19 +12,19 @@ public class SampleController {
     @GetMapping("/sample")
     public String sample1(){
         log.info("sample.....");
-        return "/blank";
+        return "blank";
     }
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/role")
     public String sample2(){
         log.info("role.....");
-        return "/blank";
+        return "blank";
     }
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/role_user")
     public String sample3(){
         log.info("role_user.....");
-        return "/blank";
+        return "blank";
     }
 
 }
