@@ -17,7 +17,7 @@ public class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Test
+   /* @Test
     public void insertTest(){
         IntStream.rangeClosed(1,100).forEach(
                 i->{
@@ -30,7 +30,7 @@ public class MemberRepositoryTest {
                 }
         );
 
-    }
+    }*/
 
     @Test
     public void insertSecurityTest(){
