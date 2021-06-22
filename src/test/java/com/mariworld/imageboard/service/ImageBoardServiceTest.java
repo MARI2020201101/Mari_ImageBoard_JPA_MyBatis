@@ -26,6 +26,6 @@ public class ImageBoardServiceTest {
     }
     @Test
     public void readTest() throws Exception {
-        imageBoardService.read(80L);
+        imageBoardService.read(101L);
     }
 }

@@ -60,7 +60,7 @@ public class ImageBoardRepositoryTest {
     @Test
     public void getImageBoardWithAllTest(){
 
-       List<Object[]> result = imageBoardRepository.getImageBoardWithAll(99L);
+       List<Object[]> result = imageBoardRepository.getImageBoardWithAll(101L);
         result.stream().map(arr -> Arrays.asList(arr)).forEach(System.out::println);
     }
 }

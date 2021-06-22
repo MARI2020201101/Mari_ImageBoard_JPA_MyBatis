@@ -15,8 +15,8 @@ public class ImageRepositoryTest {
     @Autowired
     private ImageRepository imageRepository;
 
-    @Test @Transactional @Commit
+  /*  @Test @Transactional @Commit
     public void deleteTest(){
         imageRepository.deleteByIbno(1L);
-    }
+    }*/
 }
