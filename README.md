@@ -8,10 +8,10 @@
 - 이전 버전의 깃허브 주소
 
 
-[project ver 01](https://github.com/MARI2020201101/Mari_Community_Board)
+- [PROJECT ver 01](https://github.com/MARI2020201101/Mari_Community_Board)
 
 
-[project ver 02](https://github.com/MARI2020201101/Mari_Board_JPA_MyBatis)
+- [PROJECT ver 02](https://github.com/MARI2020201101/Mari_Board_JPA_MyBatis)
 ***
 ## 프로젝트 목적
 - 파일 업로드, 삭제, 조회를 직접 구현하기 
