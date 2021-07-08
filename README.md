@@ -5,8 +5,10 @@
 - 이미지 갤러리 게시판
 ***
 ## project ver 01
-[ver .01](https://https://github.com/MARI2020201101/Mari_Community_Board)
-[ver .02](https://github.com/MARI2020201101/Mari_Board_JPA_MyBatis)
+[project ver .01](https://github.com/MARI2020201101/Mari_Community_Board)
+
+
+[project ver .02](https://github.com/MARI2020201101/Mari_Board_JPA_MyBatis)
 ***
 ## 프로젝트 목적
 - 파일 업로드, 삭제, 조회를 직접 구현하기 
