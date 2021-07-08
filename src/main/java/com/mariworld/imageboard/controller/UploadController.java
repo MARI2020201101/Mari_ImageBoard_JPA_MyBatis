@@ -31,6 +31,8 @@ public class UploadController {
     @Value("${com.mariworld.upload.path}")
     private String uploadPath;
 
+
+
     @PostMapping("/uploadFile")
     public ResponseEntity<List<ImageDTO>> upload(MultipartFile[] uploadFiles) throws Exception{
         log.info("----------------------upload------------------------------");

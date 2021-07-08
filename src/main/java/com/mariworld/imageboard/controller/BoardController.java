@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletContext;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +27,13 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    private final ServletContext context;
+
     @GetMapping("/list")
     public String index(Model model, PageRequestDTO pageRequestDTO
             , @AuthenticationPrincipal MemberDTO memberDTO)throws Exception{
-
+        String absolutePath = context.getRealPath("resources/upload");
+        log.info("absolutePath : "+absolutePath);
         log.info("---------------------------------------------------------------");
         if(memberDTO!=null){
             log.info(memberDTO.toString());

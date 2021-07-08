@@ -41,7 +41,7 @@ public class ImageBoardRepositoryTest {
 
                 Image image = Image.builder()
                         .uuid(UUID.randomUUID().toString())
-                        .imgName("image"+n+".jpg")
+                        .imgName("image"+(n+1)+".jpg")
                         .path(null)
                         .imageBoard(imageBoard)
                         .build();
