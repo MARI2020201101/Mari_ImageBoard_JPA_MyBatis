@@ -27,6 +27,8 @@
 ### 등록한 이미지를 확인하기 
 - 상세보기를 클릭하면 원본 이미지 파일이 포함된 게시글을 확인할 수 있다.
 - HTTP메소드를 통해 원본 이미지를 보여준다.
+
+
 ![등록한 이미지를 확인하기](https://github.com/MARI2020201101/Mari_ImageBoard_JPA_MyBatis/blob/master/show-multiple-images.PNG)
 
 ### 이미지 게시판 리스트 페이지 
