@@ -18,6 +18,22 @@
 - Spring data JPA를 활용하기
 - 피드백을 받고 지속적으로 개선하기
 - 제작부터 배포까지 전부 구현하기
+
+***
+### 다중 이미지 업로드하기
+- 여러장의 이미지 파일을 ajax로 등록하고, 바로 업로드 결과를 확인할 수 있다. x버튼을 누르면 삭제도 가능하다. 
+![다중 이미지 업로드하기](https://github.com/MARI2020201101/Mari_ImageBoard_JPA_MyBatis/blob/master/register-multiple-images.PNG)
+
+### 등록한 이미지를 확인하기 
+- 상세보기를 클릭하면 원본 이미지 파일이 포함된 게시글을 확인할 수 있다.
+- HTTP메소드를 통해 원본 이미지를 보여준다.
+![등록한 이미지를 확인하기](https://github.com/MARI2020201101/Mari_ImageBoard_JPA_MyBatis/blob/master/show-multiple-images.PNG)
+
+### 이미지 게시판 리스트 페이지 
+- HTTP메소드를 통해 대표 이미지를 썸네일으로 확인 할 수 있다.
+![이미지 게시판 리스트 페이지](https://github.com/MARI2020201101/Mari_ImageBoard_JPA_MyBatis/blob/master/show-image-list.PNG)
+***
+
 ## 신경 쓴 점
 - Ajax를 이용한 다중 파일 업로드하기
 - 위험 파일 확장자 및 크기체크를 Front-End 와 Back-End 양쪽에서 검사하여 보안 강화
