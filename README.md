@@ -13,6 +13,9 @@
 
 - [PROJECT ver 02](https://github.com/MARI2020201101/Mari_Board_JPA_MyBatis)
 ***
+## 개발 일정
+![프로젝트 개발 일정](https://github.com/MARI2020201101/Mari_ImageBoard_JPA_MyBatis/blob/master/mari-board-schedule.jpg)
+***
 ## 프로젝트 목적
 - 파일 업로드, 삭제, 조회를 직접 구현하기 
 - Spring data JPA를 활용하기
