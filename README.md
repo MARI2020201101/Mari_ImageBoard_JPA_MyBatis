@@ -1,4 +1,4 @@
-# :eight_spoked_asterisk:Mari_ImageBoard_JPA_MyBatis
+# :eight_pointed_black_star:Mari_ImageBoard_JPA_MyBatis
 ***
 ## 기능
 - 회원제 게시판
