@@ -1,4 +1,4 @@
-# :large_orange_diamond:Mari_ImageBoard_JPA_MyBatis
+# :eight_spoked_asterisk:Mari_ImageBoard_JPA_MyBatis
 ***
 ## 기능
 - 회원제 게시판
